@@ -1,0 +1,2 @@
+puzzlegame:levels/platformer_test
+puzzlegame:levels/topdown_test

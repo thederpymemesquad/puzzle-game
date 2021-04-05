@@ -1,0 +1,1 @@
+debugAppend = "hello from script " + playerCharacter.x;

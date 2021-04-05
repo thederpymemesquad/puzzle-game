@@ -1,0 +1,22 @@
+========== How to create a tilesheet ==========
+Tilesheets are basically just a large image containing sprites used on tiles in the game. The game will look at the image and a simple json file to figure out how it should use the tilesheet in any level its used in.
+There are example tileset images in this folder with the names
+- `alt_tiles.png`
+- `auto_tiles.png`
+- `empty_tiles.png`
+- `full_tiles.png`
+
+the json file should be formatted like this
+
+{
+    "type": "full",
+    "tiles": {
+        "source": "full_tiles.png", 
+        "width": 16,
+        "height": 16
+    }
+}
+
+type is the type of tileset this is. here are the possible values:
+-  full: a full tilesheet, with every possible "connection" state.
+- empty: a basic tilesheet with only a filled state
