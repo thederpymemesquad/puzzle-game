@@ -11,16 +11,18 @@ class Version {
     }
 
     public static macro function getBuildNumber() {
-        #if display
-        return macro $v{-1};
-        #else
+        var buildNumber = 0;
+        #if !display
         if (!FileSystem.exists("./build.txt")) {
-            File.saveContent("./build.txt", "0");
-            return macro $v{0};
+            File.saveContent("./build.txt", Std.string(buildNumber));
         }
         else {
-            return macro $v{Std.parseInt(File.getContent("./build.txt"))};
+            buildNumber = Std.parseInt(File.getContent("./build.txt"));
+            File.saveContent("./build.txt", Std.string(buildNumber + 1));
         }
         #end
+
+        File.saveContent("./test.txt", #if display "display" #else "not display" #end + " " + Std.string(buildNumber));
+        return macro $v{buildNumber + 1};
     }
 }
