@@ -51,7 +51,8 @@ class DebugDisplay extends FlxBasic {
             if (this.rightPrepend != "" && !StringTools.endsWith(this.rightText.text, "\n"))
                 this.rightText.text += "\n";
 
-            this.rightText.text += 'Haxe: ${haxe.macro.Compiler.getDefine("haxe")}\nBuild: ${Version.getBuildNumber()}\nMemory: ${mem}MB / ${maxMemory}MB\n';
+            this.rightText.text += 'Haxe: ${haxe.macro.Compiler.getDefine("haxe")}\nFlixel: ${FlxG.VERSION.toString()}\n';
+            this.rightText.text += 'Build: ${Version.getBuildNumber()}\nMemory: ${mem}MB / ${maxMemory}MB\n';
             this.rightText.text += 'System: ${LimeSys.platformName} (${FlCap.cpuArchitecture})\n\n';
             // this.rightText.text += 'Platform: ${LimeSys.platformName} (${LimeSys.platformVersion})\n\n';
             // this.rightText.text += 'CPU: \n';

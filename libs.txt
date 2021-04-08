@@ -1,0 +1,7 @@
+# List of haxelib packages that need to be installed
+ldtk-haxe-api
+json2object
+flixel
+flixel-ui
+flixel-addons
+hscript

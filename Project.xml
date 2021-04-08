@@ -35,16 +35,16 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
+	<!--flixel libs-->
 	<haxelib name="flixel" />
-
-	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-
-	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
+
+	<!--other libs-->
 	<haxelib name="json2object" />
 	<haxelib name="hscript" />
-	<!--<haxelib name="polymod" /> 
+	<haxelib name="ldtk-haxe-api" />
+	<!--<haxelib name="polymod" />-->
 	<!--potentially use polymod in the future? for now, manual hscript stuff should be fine-->
 
 	<!--In case you want to use nape with flixel-->

@@ -14,15 +14,15 @@ class Version {
         var buildNumber = 0;
         #if !display
         if (!FileSystem.exists("./build.txt")) {
-            File.saveContent("./build.txt", Std.string(buildNumber));
+            // File.saveContent("./build.txt", Std.string(buildNumber));
         }
         else {
             buildNumber = Std.parseInt(File.getContent("./build.txt"));
-            File.saveContent("./build.txt", Std.string(buildNumber + 1));
+            // File.saveContent("./build.txt", Std.string(buildNumber + 1));
         }
         #end
 
-        File.saveContent("./test.txt", #if display "display" #else "not display" #end + " " + Std.string(buildNumber));
+        // File.saveContent("./test.txt", #if display "display" #else "not display" #end + " " + Std.string(buildNumber));
         return macro $v{buildNumber + 1};
     }
 }
