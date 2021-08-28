@@ -1,5 +1,5 @@
 # List of haxelib packages that need to be installed
-ldtk-haxe-api
+# ldtk-haxe-api
 json2object
 flixel
 flixel-ui

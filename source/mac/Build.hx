@@ -5,24 +5,24 @@ import haxe.macro.Context;
 import sys.FileSystem;
 import sys.io.File;
 
-class Version {
+class Build {
     public static macro function getBuildTime() {
         return Context.parse('${Math.floor(Date.now().getTime() / 1000)}', Context.currentPos());
     }
 
-    public static macro function getVersionString() {
-        var versionString = "Unknown";
+    public static macro function getBuildNumber() {
+        var buildNumber = 0;
         #if !display
-        if (!FileSystem.exists("./version.txt")) {
-            return macro $v{versionString};
+        if (!FileSystem.exists("./build.txt")) {
+            // File.saveContent("./build.txt", Std.string(buildNumber));
         }
         else {
-            versionString = File.getContent("./version.txt");
+            buildNumber = Std.parseInt(File.getContent("./build.txt"));
             // File.saveContent("./build.txt", Std.string(buildNumber + 1));
         }
         #end
 
         // File.saveContent("./test.txt", #if display "display" #else "not display" #end + " " + Std.string(buildNumber));
-        return macro $v{versionString};
+        return macro $v{buildNumber + 1};
     }
 }

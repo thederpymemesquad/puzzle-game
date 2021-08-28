@@ -5,7 +5,9 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import hl.Gc;
 import lime.system.System as LimeSys;
+import mac.Build;
 import mac.Version;
 import openfl.system.Capabilities as FlCap;
 import openfl.system.System as FlSys;
@@ -24,6 +26,8 @@ class DebugDisplay extends FlxBasic {
     public function new() {
         super();
 
+        this.active = false;
+
         this.leftText = new FlxText(10, 10, 0, "debug-left", 20);
 
         this.rightText = new FlxText(10, 10, FlxG.width - 20, "debug-right", 20);
@@ -37,22 +41,34 @@ class DebugDisplay extends FlxBasic {
     }
 
     public override function update(elapsed:Float) {
-        var mem = Math.round(FlSys.totalMemory / 1024 / 1024 * 100) / 100;
-        if (mem > maxMemory)
-            maxMemory = mem;
+        var memStatsRaw = Gc.stats();
+        var memStats = {
+            totalAllocated: Math.round(memStatsRaw.totalAllocated / 1024 / 1024 * 100) / 10,
+            currentMemory: Math.round(memStatsRaw.currentMemory / 1024 / 1024 * 100) / 10,
+            allocationCount: Math.round(memStatsRaw.allocationCount / 1024 / 1024 * 100) / 10,
+        };
+
+        if (memStats.currentMemory > maxMemory)
+            maxMemory = memStats.currentMemory;
         if (this.visible) {
             this.leftText.text = this.leftPrepend;
             if (this.leftPrepend != "" && !StringTools.endsWith(this.leftText.text, "\n"))
                 this.leftText.text += "\n";
 
-            this.leftText.text += 'FPS: ${Main.fpsCounter.currentFPS}\n' + this.leftAppend;
+            this.leftText.text += 'Game ${Version.getVersionString()} (${#if debug 'debug' #else 'release' #end})\n';
+            this.leftText.text += 'FPS: ${Main.fpsCounter.currentFPS}\n';
+
+            this.leftText.text += this.leftAppend;
 
             this.rightText.text = this.rightPrepend;
             if (this.rightPrepend != "" && !StringTools.endsWith(this.rightText.text, "\n"))
                 this.rightText.text += "\n";
 
-            this.rightText.text += 'Haxe: ${haxe.macro.Compiler.getDefine("haxe")}\nFlixel: ${FlxG.VERSION.toString()}\n';
-            this.rightText.text += 'Build: ${Version.getBuildNumber()}\nMemory: ${mem}MB / ${maxMemory}MB\n';
+            this.rightText.text += 'Haxe: ${haxe.macro.Compiler.getDefine("haxe")}\n';
+            this.rightText.text += 'Flixel: ${FlxG.VERSION.toString()}\n';
+            this.rightText.text += 'Build: ${Build.getBuildNumber()}\n';
+            this.rightText.text += 'Mem: ${memStats.currentMemory} / ${maxMemory}MB\n';
+            this.rightText.text += 'Alloc: ${memStats.allocationCount} / ${memStats.totalAllocated}\n';
             this.rightText.text += 'System: ${LimeSys.platformName} (${FlCap.cpuArchitecture})\n\n';
             // this.rightText.text += 'Platform: ${LimeSys.platformName} (${LimeSys.platformVersion})\n\n';
             // this.rightText.text += 'CPU: \n';

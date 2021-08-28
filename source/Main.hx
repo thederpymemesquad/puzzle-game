@@ -1,8 +1,9 @@
 package;
 
-import editor.EditorState;
+// import editor.EditorState;
 import flixel.FlxG;
 import flixel.FlxGame;
+import lime.app.Application;
 import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
@@ -22,5 +23,7 @@ class Main extends Sprite {
         Main.fpsCounter = new FPS(10, 10, 0xFFFFFF);
         addChild(Main.fpsCounter);
         Main.fpsCounter.alpha = 0;
+
+        Application.current.window.title = 'hi buddy';
     }
 }

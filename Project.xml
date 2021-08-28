@@ -43,7 +43,7 @@
 	<!--other libs-->
 	<haxelib name="json2object" />
 	<haxelib name="hscript" />
-	<haxelib name="ldtk-haxe-api" />
+	<!--<haxelib name="ldtk-haxe-api" />-->
 	<!--<haxelib name="polymod" />-->
 	<!--potentially use polymod in the future? for now, manual hscript stuff should be fine-->
 

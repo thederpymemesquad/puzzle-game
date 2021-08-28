@@ -16,6 +16,7 @@ import flixel.system.debug.FlxDebugger.FlxDebuggerLayout;
 import flixel.text.FlxText;
 import flixel.tile.FlxBaseTilemap.FlxTilemapAutoTiling;
 import flixel.tile.FlxTilemap;
+import hl.Gc;
 import hscript.Interp;
 import hscript.Parser;
 import level.LevelLoader;
@@ -46,6 +47,8 @@ class PlayState extends FlxState {
 
     public var debugInfoVisible:Bool = #if debug true #else false #end;
 
+    private var hasTriggeredDebugAction:Bool = false;
+
     public function new(level:NamespacedKey, ?spawnpoint:String) {
         super();
         if (level == null) {
@@ -65,9 +68,10 @@ class PlayState extends FlxState {
         this.hudCamera.bgColor.alpha = 0;
 
         FlxG.cameras.reset(this.gameCamera);
-        FlxG.cameras.add(this.hudCamera);
+        FlxG.cameras.add(this.hudCamera, false);
 
-        FlxCamera.defaultCameras = [this.gameCamera];
+        // FlxG.cameras.setDefaultDrawTarget(this.gameCamera, false);
+        // FlxCamera.defaultCameras = [this.gameCamera];
 
         // debugDisplay = new FlxText(10, 20, 0, "debug", 20);
 
@@ -159,7 +163,7 @@ class PlayState extends FlxState {
             debugAppend = interp.variables.get("debugAppend");
         }
 
-        if (this.debugInfoVisible) {
+        if (this.debugDisplay.visible) {
             this.debugDisplay.leftAppend = 'vX: ${this.playerCharacter.velocity.x} vY: ${this.playerCharacter.velocity.y}\naX: ${this.playerCharacter.acceleration.x} aY: ${this.playerCharacter.acceleration.y}\npX: ${Math.round(this.playerCharacter.x) / 16} pY: ${Math.round(this.playerCharacter.y) / 16}\ncX: ${this.gameCamera.scroll.x} cY: ${this.gameCamera.scroll.y}';
 
             if (Std.isOfType(this.playerCharacter, PlatformerPlayer)) {
@@ -207,8 +211,20 @@ class PlayState extends FlxState {
             #end
         }
 
-        if (FlxG.keys.anyJustPressed([F3])) {
-            this.debugDisplay.visible = !this.debugDisplay.visible;
+        if (FlxG.keys.anyPressed([F3])) {
+            if (FlxG.keys.anyJustPressed([Y])) {
+                Gc.dumpMemory('hlmemory.dump');
+                this.hasTriggeredDebugAction = true;
+            }
+
+            // if (FlxG.)
+        }
+
+        if (FlxG.keys.anyJustReleased([F3])) {
+            if (!this.hasTriggeredDebugAction) {
+                this.debugDisplay.visible = !this.debugDisplay.visible;
+            }
+            this.hasTriggeredDebugAction = false;
         }
 
         if (FlxG.keys.anyJustPressed([F4])) {
@@ -304,6 +320,8 @@ class PlayState extends FlxState {
         else {
             this.gameCamera.alpha = 0.7;
         }
+
+        this.debugDisplay.update(elapsed);
     }
     /*public override function draw()
         {

@@ -58,7 +58,7 @@ class ShiftingMenuSubstate extends FlxSubState {
 
         this.shiftingCamera = new FlxCamera();
         this.shiftingCamera.bgColor.alpha = 0;
-        FlxG.cameras.add(this.shiftingCamera);
+        FlxG.cameras.add(this.shiftingCamera, false);
         this.shiftingCamera.alpha = 0;
         FlxTween.tween(this.shiftingCamera, {alpha: 1}, 0.2);
     }

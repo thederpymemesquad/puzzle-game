@@ -58,9 +58,9 @@ class EditorState extends FlxUIState {
         this.hudCamera.bgColor.alpha = 0;
 
         FlxG.cameras.reset(this.gameCamera);
-        FlxG.cameras.add(this.hudCamera);
+        FlxG.cameras.add(this.hudCamera, false);
 
-        FlxCamera.defaultCameras = [this.gameCamera];
+        // FlxCamera.defaultCameras = [this.gameCamera];
 
         debugDisplay = new FlxText((FlxG.width / 6) + 10, 20, 0, "debug", 20);
         add(debugDisplay);

@@ -1,1 +1,1 @@
-debugAppend = "hello from script " + playerCharacter.x;
+//debugAppend = "hello from script " + playerCharacter.x;
